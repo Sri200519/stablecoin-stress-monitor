@@ -1,0 +1,191 @@
+{
+  "analysis_definition": {
+    "study_window": "2022-05-01 through 2022-05-31 UTC",
+    "phases": {
+      "pre_crisis": "May 1-6",
+      "crisis": "May 7-15",
+      "post_crisis": "May 16-31"
+    },
+    "deviation": "100 * abs(price_usd - 1.00)",
+    "recovery": "First hour beginning 24 consecutive hourly observations inside the chosen band after the first breach.",
+    "default_threshold_pct": 1.0
+  },
+  "sources": {
+    "prices": {
+      "source": "DefiLlama Coins API",
+      "endpoint": "https://coins.llama.fi/chart/coingecko:terrausd,coingecko:tether,coingecko:usd-coin",
+      "parameters": {
+        "chunks": [
+          {
+            "start": 1651363200,
+            "span": 120
+          },
+          {
+            "start": 1651795200,
+            "span": 120
+          },
+          {
+            "start": 1652227200,
+            "span": 120
+          },
+          {
+            "start": 1652659200,
+            "span": 120
+          },
+          {
+            "start": 1653091200,
+            "span": 120
+          },
+          {
+            "start": 1653523200,
+            "span": 120
+          },
+          {
+            "start": 1653955200,
+            "span": 24
+          }
+        ],
+        "period": "1h",
+        "searchWidth": "4h"
+      },
+      "mode": "cached",
+      "retrieved_rows": 1890,
+      "assets": [
+        "USDC",
+        "USDT",
+        "UST"
+      ],
+      "notes": "No API key required. Prices are DefiLlama's aggregated CoinGecko identifiers."
+    },
+    "reserve_supply": {
+      "source": "Coin Metrics Community API",
+      "endpoint": "https://community-api.coinmetrics.io/v4/timeseries/asset-metrics",
+      "parameters": {
+        "assets": "usdt,usdc",
+        "metrics": "SplyCur",
+        "frequency": "1d",
+        "start_time": "2022-05-01",
+        "end_time": "2022-05-31",
+        "page_size": 10000
+      },
+      "mode": "cached",
+      "retrieved_rows": 62,
+      "notes": "SplyCur is available historically for USDT and USDC without a community API key."
+    },
+    "ust_supply": {
+      "source": "DefiLlama Stablecoins API",
+      "endpoint": "https://stablecoins.llama.fi/stablecoin/3",
+      "mode": "cached",
+      "retrieved_rows": 31,
+      "notes": "Native Terra Classic coverage begins during the crisis while bridged-chain records appear earlier; chain-level balances may also include bridged representations. Use as a provisional series, not a directly comparable full-month measure."
+    }
+  },
+  "asset_summary": [
+    {
+      "asset": "UST",
+      "observations": 586,
+      "min_price_usd": 0.02393365703632819,
+      "min_price_time": "2022-05-31T04:00:00+00:00",
+      "max_downside_depeg_pct": 97.60663429636718,
+      "max_abs_deviation_pct": 97.60663429636718,
+      "max_abs_deviation_time": "2022-05-31T04:00:00+00:00",
+      "hours_within_0_5pct": 28.668941979522184,
+      "hours_within_1pct": 30.034129692832767,
+      "threshold_pct": 1.0,
+      "breach_time": "2022-05-09T15:00:00+00:00",
+      "recovery_time": "NaT",
+      "recovery_hours": NaN,
+      "status": "Not recovered in study window"
+    },
+    {
+      "asset": "USDT",
+      "observations": 705,
+      "min_price_usd": 0.9926410612684696,
+      "min_price_time": "2022-05-12T11:00:00+00:00",
+      "max_downside_depeg_pct": 0.7358938731530373,
+      "max_abs_deviation_pct": 0.7358938731530373,
+      "max_abs_deviation_time": "2022-05-12T11:00:00+00:00",
+      "hours_within_0_5pct": 99.29078014184397,
+      "hours_within_1pct": 100.0,
+      "threshold_pct": 1.0,
+      "breach_time": "NaT",
+      "recovery_time": "NaT",
+      "recovery_hours": NaN,
+      "status": "No breach beyond 1.0%"
+    },
+    {
+      "asset": "USDC",
+      "observations": 599,
+      "min_price_usd": 0.9909943933476609,
+      "min_price_time": "2022-05-11T13:00:00+00:00",
+      "max_downside_depeg_pct": 0.9005606652339071,
+      "max_abs_deviation_pct": 2.601687752617443,
+      "max_abs_deviation_time": "2022-05-12T07:00:00+00:00",
+      "hours_within_0_5pct": 95.65943238731218,
+      "hours_within_1pct": 99.1652754590985,
+      "threshold_pct": 1.0,
+      "breach_time": "2022-05-12T05:00:00+00:00",
+      "recovery_time": "2022-05-12T11:00:00+00:00",
+      "recovery_hours": 6.0,
+      "status": "Recovered"
+    }
+  ],
+  "supply_summary": [
+    {
+      "asset": "USDC",
+      "coverage_status": "complete",
+      "first_date": "2022-05-01",
+      "last_date": "2022-05-31",
+      "first_supply_tokens": 49949342411.774254,
+      "last_supply_tokens": 54450371232.01147,
+      "change_tokens": 4501028820.237213,
+      "change_pct": 9.011187340829162
+    },
+    {
+      "asset": "USDT",
+      "coverage_status": "complete",
+      "first_date": "2022-05-01",
+      "last_date": "2022-05-31",
+      "first_supply_tokens": 85435082302.80942,
+      "last_supply_tokens": 79434753168.7508,
+      "change_tokens": -6000329134.058624,
+      "change_pct": -7.023261372642596
+    },
+    {
+      "asset": "UST",
+      "coverage_status": "partial_provisional",
+      "first_date": "2022-05-01",
+      "last_date": "2022-05-31",
+      "first_supply_tokens": 1388420433.0,
+      "last_supply_tokens": 11272313612.0,
+      "change_tokens": NaN,
+      "change_pct": NaN
+    }
+  ],
+  "data_quality": [
+    {
+      "asset": "USDC",
+      "observed_hours": 599,
+      "first_observation": "2022-05-01T00:00:00+00:00",
+      "last_observation": "2022-05-31T22:00:00+00:00",
+      "expected_hours": 744,
+      "coverage_pct": 80.51075268817203
+    },
+    {
+      "asset": "USDT",
+      "observed_hours": 705,
+      "first_observation": "2022-05-01T00:00:00+00:00",
+      "last_observation": "2022-05-31T23:00:00+00:00",
+      "expected_hours": 744,
+      "coverage_pct": 94.75806451612904
+    },
+    {
+      "asset": "UST",
+      "observed_hours": 586,
+      "first_observation": "2022-05-01T00:00:00+00:00",
+      "last_observation": "2022-05-31T23:00:00+00:00",
+      "expected_hours": 744,
+      "coverage_pct": 78.76344086021506
+    }
+  ]
+}

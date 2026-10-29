@@ -1,0 +1,131 @@
+{
+  "data": [
+    {
+      "supply_tokens": 1388420433.0,
+      "timestamp": 1651363200
+    },
+    {
+      "supply_tokens": 1387552058.0,
+      "timestamp": 1651449600
+    },
+    {
+      "supply_tokens": 1388744509.0,
+      "timestamp": 1651536000
+    },
+    {
+      "supply_tokens": 1386074938.0,
+      "timestamp": 1651622400
+    },
+    {
+      "supply_tokens": 1372828910.0,
+      "timestamp": 1651708800
+    },
+    {
+      "supply_tokens": 1364596156.0,
+      "timestamp": 1651795200
+    },
+    {
+      "supply_tokens": 1429891733.0,
+      "timestamp": 1651881600
+    },
+    {
+      "supply_tokens": 2287859561.0,
+      "timestamp": 1651968000
+    },
+    {
+      "supply_tokens": 2672619699.0,
+      "timestamp": 1652054400
+    },
+    {
+      "supply_tokens": 2500178585.0,
+      "timestamp": 1652140800
+    },
+    {
+      "supply_tokens": 2049441797.0,
+      "timestamp": 1652227200
+    },
+    {
+      "supply_tokens": 14712264684.0,
+      "timestamp": 1652313600
+    },
+    {
+      "supply_tokens": 11297231900.0,
+      "timestamp": 1652400000
+    },
+    {
+      "supply_tokens": 11274005242.0,
+      "timestamp": 1652486400
+    },
+    {
+      "supply_tokens": 11273736116.0,
+      "timestamp": 1652572800
+    },
+    {
+      "supply_tokens": 11273540263.0,
+      "timestamp": 1652659200
+    },
+    {
+      "supply_tokens": 11272732625.0,
+      "timestamp": 1652745600
+    },
+    {
+      "supply_tokens": 11272399897.0,
+      "timestamp": 1652832000
+    },
+    {
+      "supply_tokens": 11273248499.0,
+      "timestamp": 1652918400
+    },
+    {
+      "supply_tokens": 11272976162.0,
+      "timestamp": 1653004800
+    },
+    {
+      "supply_tokens": 11272798711.0,
+      "timestamp": 1653091200
+    },
+    {
+      "supply_tokens": 11272616114.0,
+      "timestamp": 1653177600
+    },
+    {
+      "supply_tokens": 11272845884.0,
+      "timestamp": 1653264000
+    },
+    {
+      "supply_tokens": 11273035779.0,
+      "timestamp": 1653350400
+    },
+    {
+      "supply_tokens": 11273024533.0,
+      "timestamp": 1653436800
+    },
+    {
+      "supply_tokens": 11274364924.0,
+      "timestamp": 1653523200
+    },
+    {
+      "supply_tokens": 11273492024.0,
+      "timestamp": 1653609600
+    },
+    {
+      "supply_tokens": 11273232686.0,
+      "timestamp": 1653696000
+    },
+    {
+      "supply_tokens": 11272314486.0,
+      "timestamp": 1653782400
+    },
+    {
+      "supply_tokens": 11272558709.0,
+      "timestamp": 1653868800
+    },
+    {
+      "supply_tokens": 11272313612.0,
+      "timestamp": 1653955200
+    }
+  ],
+  "endpoint": "https://stablecoins.llama.fi/stablecoin/3",
+  "source": "DefiLlama Stablecoins API",
+  "warning": "Native Terra Classic coverage begins during the crisis while bridged-chain records appear earlier; chain-level balances may also include bridged representations. Use as a provisional series, not a directly comparable full-month measure."
+}
