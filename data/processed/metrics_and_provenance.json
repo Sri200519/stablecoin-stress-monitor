@@ -7,7 +7,7 @@
       "post_crisis": "May 16-31"
     },
     "deviation": "100 * abs(price_usd - 1.00)",
-    "recovery": "First hour beginning 24 consecutive hourly observations inside the chosen band after the first breach.",
+    "recovery": "First hour beginning 24 adjacent clock hours inside the chosen band after the first breach; missing hours break the streak.",
     "default_threshold_pct": 1.0
   },
   "sources": {
@@ -93,8 +93,8 @@
       "hours_within_1pct": 30.034129692832767,
       "threshold_pct": 1.0,
       "breach_time": "2022-05-09T15:00:00+00:00",
-      "recovery_time": "NaT",
-      "recovery_hours": NaN,
+      "recovery_time": null,
+      "recovery_hours": null,
       "status": "Not recovered in study window"
     },
     {
@@ -109,8 +109,8 @@
       "hours_within_1pct": 100.0,
       "threshold_pct": 1.0,
       "breach_time": "NaT",
-      "recovery_time": "NaT",
-      "recovery_hours": NaN,
+      "recovery_time": null,
+      "recovery_hours": null,
       "status": "No breach beyond 1.0%"
     },
     {
@@ -125,9 +125,83 @@
       "hours_within_1pct": 99.1652754590985,
       "threshold_pct": 1.0,
       "breach_time": "2022-05-12T05:00:00+00:00",
-      "recovery_time": "2022-05-12T11:00:00+00:00",
-      "recovery_hours": 6.0,
+      "recovery_time": null,
+      "recovery_hours": null,
+      "status": "Not recovered in study window"
+    }
+  ],
+  "threshold_comparison": [
+    {
+      "asset": "UST",
+      "threshold_pct": 0.5,
+      "breach_time": "2022-05-08T01:00:00+00:00",
+      "recovery_time": "NaT",
+      "recovery_hours": NaN,
+      "status": "Not recovered in study window"
+    },
+    {
+      "asset": "USDT",
+      "threshold_pct": 0.5,
+      "breach_time": "2022-05-10T00:00:00+00:00",
+      "recovery_time": "2022-05-10T16:00:00+00:00",
+      "recovery_hours": 16.0,
       "status": "Recovered"
+    },
+    {
+      "asset": "USDC",
+      "threshold_pct": 0.5,
+      "breach_time": "2022-05-09T18:00:00+00:00",
+      "recovery_time": "NaT",
+      "recovery_hours": NaN,
+      "status": "Not recovered in study window"
+    },
+    {
+      "asset": "UST",
+      "threshold_pct": 1.0,
+      "breach_time": "2022-05-09T15:00:00+00:00",
+      "recovery_time": null,
+      "recovery_hours": null,
+      "status": "Not recovered in study window"
+    },
+    {
+      "asset": "USDT",
+      "threshold_pct": 1.0,
+      "breach_time": "NaT",
+      "recovery_time": null,
+      "recovery_hours": null,
+      "status": "No breach beyond 1.0%"
+    },
+    {
+      "asset": "USDC",
+      "threshold_pct": 1.0,
+      "breach_time": "2022-05-12T05:00:00+00:00",
+      "recovery_time": null,
+      "recovery_hours": null,
+      "status": "Not recovered in study window"
+    },
+    {
+      "asset": "UST",
+      "threshold_pct": 5.0,
+      "breach_time": "2022-05-09T18:00:00+00:00",
+      "recovery_time": null,
+      "recovery_hours": null,
+      "status": "Not recovered in study window"
+    },
+    {
+      "asset": "USDT",
+      "threshold_pct": 5.0,
+      "breach_time": "NaT",
+      "recovery_time": null,
+      "recovery_hours": null,
+      "status": "No breach beyond 5.0%"
+    },
+    {
+      "asset": "USDC",
+      "threshold_pct": 5.0,
+      "breach_time": "NaT",
+      "recovery_time": null,
+      "recovery_hours": null,
+      "status": "No breach beyond 5.0%"
     }
   ],
   "supply_summary": [

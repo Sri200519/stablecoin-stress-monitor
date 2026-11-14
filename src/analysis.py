@@ -31,7 +31,7 @@ def recovery_after_breach(
     threshold_pct: float,
     consecutive_observations: int = 24,
 ) -> dict[str, Any]:
-    """Find recovery after the first threshold breach using sustained hourly observations."""
+    """Find recovery after the first breach using consecutive clock hours in band."""
     ordered = group.sort_values("timestamp").reset_index(drop=True)
     breached = ordered["absolute_deviation_pct"] > threshold_pct
     if not breached.any():
@@ -43,18 +43,27 @@ def recovery_after_breach(
         }
     first_index = int(np.flatnonzero(breached.to_numpy())[0])
     breach_time = ordered.loc[first_index, "timestamp"]
-    in_band = ordered["absolute_deviation_pct"] <= threshold_pct
-    rolling = in_band.rolling(consecutive_observations).sum()
-    candidates = rolling.index[(rolling == consecutive_observations) & (rolling.index >= first_index)]
-    if len(candidates) == 0:
+    streak = 0
+    start_index = None
+    for index in range(first_index + 1, len(ordered)):
+        is_next_hour = (
+            ordered.loc[index, "timestamp"] - ordered.loc[index - 1, "timestamp"]
+            == pd.Timedelta(hours=1)
+        )
+        if ordered.loc[index, "absolute_deviation_pct"] <= threshold_pct:
+            streak = streak + 1 if is_next_hour else 1
+            if streak == consecutive_observations:
+                start_index = index - consecutive_observations + 1
+                break
+        else:
+            streak = 0
+    if start_index is None:
         return {
             "breach_time": breach_time,
             "recovery_time": None,
             "recovery_hours": None,
             "status": "Not recovered in study window",
         }
-    end_index = int(candidates[0])
-    start_index = end_index - consecutive_observations + 1
     recovery_time = ordered.loc[start_index, "timestamp"]
     hours = (recovery_time - breach_time).total_seconds() / 3600.0
     return {

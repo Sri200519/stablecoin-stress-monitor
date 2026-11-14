@@ -41,3 +41,26 @@ def test_no_recovery_when_window_ends_inside_breach() -> None:
     assert result["status"] == "Not recovered in study window"
     assert result["recovery_time"] is None
 
+
+def test_missing_hour_breaks_24_hour_recovery_streak() -> None:
+    hours = pd.date_range("2022-05-01", periods=26, freq="h", tz="UTC")
+    observed = hours.delete(13)
+    frame = enrich_prices(
+        pd.DataFrame({"timestamp": observed, "asset": "TEST", "price_usd": [0.97] + [1.0] * 24})
+    )
+    result = recovery_after_breach(frame, threshold_pct=1.0)
+    assert result["status"] == "Not recovered in study window"
+    assert result["recovery_time"] is None
+
+
+def test_recovery_starts_after_missing_hour_when_new_streak_reaches_24() -> None:
+    hours = pd.date_range("2022-05-01", periods=38, freq="h", tz="UTC")
+    observed = hours.delete(13)
+    frame = enrich_prices(
+        pd.DataFrame({"timestamp": observed, "asset": "TEST", "price_usd": [0.97] + [1.0] * 36})
+    )
+    result = recovery_after_breach(frame, threshold_pct=1.0)
+    assert result["status"] == "Recovered"
+    assert result["recovery_time"] == hours[14]
+    assert result["recovery_hours"] == 14.0
+

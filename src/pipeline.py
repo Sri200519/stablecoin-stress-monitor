@@ -33,6 +33,12 @@ def run_pipeline(refresh: bool = False, offline: bool = False) -> dict[str, Path
     supply = pd.concat([reserve_supply, ust_supply], ignore_index=True)
     supply = supply.sort_values(["asset", "date"]).reset_index(drop=True)
     asset_summary = build_asset_summary(prices, threshold_pct=1.0)
+    threshold_comparison = pd.concat(
+        [build_asset_summary(prices, threshold_pct=t) for t in (0.5, 1.0, 5.0)],
+        ignore_index=True,
+    )[
+        ["asset", "threshold_pct", "breach_time", "recovery_time", "recovery_hours", "status"]
+    ]
     phase_summary = build_phase_summary(prices)
     supply_summary = build_supply_summary(supply)
     data_quality = (
@@ -51,6 +57,7 @@ def run_pipeline(refresh: bool = False, offline: bool = False) -> dict[str, Path
         "prices": PROCESSED_DIR / "prices_hourly_may2022.csv",
         "supply": PROCESSED_DIR / "supply_daily_may2022.csv",
         "asset_summary": PROCESSED_DIR / "asset_summary_1pct.csv",
+        "threshold_comparison": PROCESSED_DIR / "threshold_comparison.csv",
         "phase_summary": PROCESSED_DIR / "phase_summary.csv",
         "supply_summary": PROCESSED_DIR / "supply_summary.csv",
         "data_quality": PROCESSED_DIR / "data_quality_summary.csv",
@@ -59,6 +66,7 @@ def run_pipeline(refresh: bool = False, offline: bool = False) -> dict[str, Path
     prices.to_csv(paths["prices"], index=False)
     supply.to_csv(paths["supply"], index=False)
     asset_summary.to_csv(paths["asset_summary"], index=False)
+    threshold_comparison.to_csv(paths["threshold_comparison"], index=False)
     phase_summary.to_csv(paths["phase_summary"], index=False)
     supply_summary.to_csv(paths["supply_summary"], index=False)
     data_quality.to_csv(paths["data_quality"], index=False)
@@ -72,11 +80,12 @@ def run_pipeline(refresh: bool = False, offline: bool = False) -> dict[str, Path
                 "post_crisis": "May 16-31",
             },
             "deviation": "100 * abs(price_usd - 1.00)",
-            "recovery": "First hour beginning 24 consecutive hourly observations inside the chosen band after the first breach.",
+            "recovery": "First hour beginning 24 adjacent clock hours inside the chosen band after the first breach; missing hours break the streak.",
             "default_threshold_pct": 1.0,
         },
         "sources": {"prices": price_meta, "reserve_supply": reserve_meta, "ust_supply": ust_meta},
         "asset_summary": asset_summary.to_dict(orient="records"),
+        "threshold_comparison": threshold_comparison.to_dict(orient="records"),
         "supply_summary": supply_summary.to_dict(orient="records"),
         "data_quality": data_quality.to_dict(orient="records"),
     }

@@ -1,7 +1,7 @@
 """Stablecoin Stress Monitor: interactive dashboard.
 
 Run from the project root:
-    streamlit run app.py
+    streamlit run scripts/app.py
 
 The dashboard reads only the processed CSV files in data/processed/ and reuses the
 calculation functions in src/analysis.py. It does not call any API.
@@ -114,8 +114,8 @@ threshold = st.sidebar.radio(
 )
 selected = st.sidebar.multiselect("Stablecoins", ASSET_ORDER, default=ASSET_ORDER)
 st.sidebar.caption(
-    "Recovery = the first hour of 24 consecutive hourly observations back inside the band "
-    "after the first breach. Missing hours are never filled in."
+    "Recovery = the first hour of 24 consecutive clock hours back inside the band "
+    "after the first breach. Missing hours break the streak."
 )
 st.sidebar.caption("Data: DefiLlama hourly prices; Coin Metrics daily supply. All times UTC.")
 
@@ -268,8 +268,7 @@ with tab_peg:
     st.caption(
         "Lost peg = first hour the price moved beyond the threshold in either direction "
         "(so a price spike above $1 also counts). Recovered = first hour of 24 consecutive "
-        "observations back inside the band. Because some hours are missing, 24 observations "
-        "can span more than 24 clock hours."
+        "clock hours back inside the band. A missing hour breaks the streak."
     )
 
 # ---------------------------------------------------------------------- supply
@@ -309,7 +308,8 @@ with tab_supply:
                        f"{r['change_pct']:+.1f}% ({r['change_tokens'] / 1e9:+.2f}B)",
                        delta_color="off")
     st.caption(
-        "Supply changes show net issuance and redemption; they do not tell us why holders acted. "
+        "USDT supply fell while USDC supply rose, consistent with possible reallocation. "
+        "These aggregate series cannot trace where the same investors' money went or establish why supply changed. "
         "UST supply is excluded because its series is partial and provisional."
     )
 

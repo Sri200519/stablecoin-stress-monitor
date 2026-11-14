@@ -1,0 +1,10 @@
+asset,threshold_pct,breach_time,recovery_time,recovery_hours,status
+UST,0.5,2022-05-08 01:00:00+00:00,,,Not recovered in study window
+USDT,0.5,2022-05-10 00:00:00+00:00,2022-05-10 16:00:00+00:00,16.0,Recovered
+USDC,0.5,2022-05-09 18:00:00+00:00,,,Not recovered in study window
+UST,1.0,2022-05-09 15:00:00+00:00,,,Not recovered in study window
+USDT,1.0,,,,No breach beyond 1.0%
+USDC,1.0,2022-05-12 05:00:00+00:00,,,Not recovered in study window
+UST,5.0,2022-05-09 18:00:00+00:00,,,Not recovered in study window
+USDT,5.0,,,,No breach beyond 5.0%
+USDC,5.0,,,,No breach beyond 5.0%

@@ -1,6 +1,6 @@
-# Stablecoin Stress Monitor Milestone 2
+# Stablecoin Stress Monitor
 
-This folder contains a reproducible data pipeline, processed evidence, static figures, and the Milestone 2 progress report for the May 2022 comparison of UST, USDT, and USDC.
+This repository contains a reproducible data pipeline, processed evidence, static figures, and an interactive dashboard for the May 2022 comparison of UST, USDT, and USDC.
 
 ## What is complete
 
@@ -14,13 +14,14 @@ This folder contains a reproducible data pipeline, processed evidence, static fi
 
 ## Quick start
 
-Python 3.11 or later is recommended.
+Python 3.12 or later is required by the pinned NumPy version.
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate          # Windows PowerShell: .venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
 python scripts/run_pipeline.py --offline
+streamlit run scripts/app.py
 ```
 
 To download fresh source data instead of using the included caches:
@@ -35,10 +36,10 @@ No API key is needed. See `API_SETUP.md` for endpoints, parameters, limitations,
 
 | Path | Purpose |
 | --- | --- |
-| `Milestone_2_Progress_Report.docx` and `.pdf` | Submission-ready 2-4 page report |
 | `data/raw/` | Submitted API response caches |
 | `data/processed/prices_hourly_may2022.csv` | Clean price and deviation data |
 | `data/processed/asset_summary_1pct.csv` | Main one-percent threshold results |
+| `data/processed/threshold_comparison.csv` | Breach and recovery results at 0.5%, 1%, and 5% tolerances |
 | `data/processed/phase_summary.csv` | Pre-crisis, crisis, and post-crisis statistics |
 | `data/processed/supply_summary.csv` | Supply change calculations and coverage labels |
 | `data/processed/data_quality_summary.csv` | Observed versus expected hourly coverage |
@@ -47,9 +48,21 @@ No API key is needed. See `API_SETUP.md` for endpoints, parameters, limitations,
 
 ## Analytical definitions
 
-Price deviation is `100 × (price - 1.00)`. Absolute deviation uses its absolute value. Downside depeg is the positive shortfall below one dollar. Recovery begins at the first hour of 24 consecutive hourly observations inside the selected band after the first breach. An asset that never breaches the threshold is labeled separately from one that breaches and later recovers.
+Price deviation is `100 × (price - 1.00)`. Absolute deviation uses its absolute value. Downside depeg is the positive shortfall below one dollar. Recovery begins at the first hour of 24 consecutive clock hours inside the selected band after the first breach. A missing hour breaks the streak. An asset that never breaches the threshold is labeled separately from one that breaches and later recovers.
 
 The study phases match Milestone 1: pre-crisis is May 1-6, crisis is May 7-15, and post-crisis is May 16-31. All timestamps are UTC.
+
+## Peg-tolerance sensitivity
+
+The table uses the same May 2022 hourly source and 24 consecutive clock-hour recovery rule at each tolerance. A recovery time measures the delay from the first breach to the **start** of the qualifying 24-hour streak.
+
+| Asset | ±0.5% band | ±1% band | ±5% band |
+| --- | --- | --- | --- |
+| UST | Breached; no recovery | Breached; no recovery | Breached; no recovery |
+| USDT | Recovered; streak began 16 h after breach | No breach | No breach |
+| USDC | Breached; no recovery | Breached; no recovery | No breach |
+
+The earlier 1% USDC result counted 24 in-band **observations** across missing hours and reported recovery beginning six hours after the first breach. With the clock-hour rule, that streak is interrupted, so the corrected result is **not recovered within the observed May window**. This does not establish that USDC remained off peg through May 31: missing data prevent confirmation of a continuous recovery streak. USDC's first 1% breach was an upside price move; the classification uses absolute deviation rather than downside loss alone. See `data/processed/threshold_comparison.csv` for breach timestamps and the exact outcomes.
 
 ## Folder map
 
@@ -62,12 +75,14 @@ The study phases match Milestone 1: pre-crisis is May 1-6, crisis is May 7-15, a
 ├── data/processed/       clean data and summaries
 ├── evidence/             figures
 ├── API_SETUP.md
-├── MILESTONE_2_CHECKLIST.md
+├── DATA_DICTIONARY.md
 └── requirements.txt
 ```
 
-## Important limitation
+## Important limitations
 
 Coin Metrics' Community ReferenceRate catalog currently exposes only recent price history, not May 2022. The pipeline therefore uses DefiLlama for historical price and Coin Metrics for USDT and USDC supply. UST supply is partial and provisional because native-chain coverage begins during the crisis and bridged-chain rows appear earlier. The current comparable supply analysis is therefore limited to USDT and USDC. The report states this limitation and the revision plan explicitly.
+
+The opposing USDT and USDC supply movements are consistent with possible reallocation, but aggregate supply series cannot trace where the same investors' money went or establish their motives.
 
 
