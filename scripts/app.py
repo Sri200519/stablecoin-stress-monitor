@@ -8,9 +8,15 @@ calculation functions in src/analysis.py. It does not call any API.
 """
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+
 import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(PROJECT_ROOT))
 
 from src.analysis import build_asset_summary, build_phase_summary, build_supply_summary
 from src.config import ASSET_COLORS, ASSET_ORDER, PHASES, PROCESSED_DIR
