@@ -39,7 +39,7 @@ No API key is needed. See `API_SETUP.md` for endpoints, parameters, limitations,
 | `data/raw/` | Submitted API response caches |
 | `data/processed/prices_hourly_may2022.csv` | Clean price and deviation data |
 | `data/processed/asset_summary_1pct.csv` | Main one-percent threshold results |
-| `data/processed/threshold_comparison.csv` | Breach and recovery results at 0.5%, 1%, and 5% tolerances |
+| `data/processed/threshold_comparison.csv` | Breach, recovery, and longest observed in-band streak at 0.5%, 1%, and 5% tolerances |
 | `data/processed/phase_summary.csv` | Pre-crisis, crisis, and post-crisis statistics |
 | `data/processed/supply_summary.csv` | Supply change calculations and coverage labels |
 | `data/processed/data_quality_summary.csv` | Observed versus expected hourly coverage |
@@ -63,6 +63,8 @@ The table uses the same May 2022 hourly source and 24 consecutive clock-hour rec
 | USDC | Breached; no recovery | Breached; no recovery | No breach |
 
 The earlier 1% USDC result counted 24 in-band **observations** across missing hours and reported recovery beginning six hours after the first breach. With the clock-hour rule, that streak is interrupted, so the corrected result is **not recovered within the observed May window**. This does not establish that USDC remained off peg through May 31: missing data prevent confirmation of a continuous recovery streak. USDC's first 1% breach was an upside price move; the classification uses absolute deviation rather than downside loss alone. See `data/processed/threshold_comparison.csv` for breach timestamps and the exact outcomes.
+
+The `longest_observed_in_band_streak_hours` field makes this classification auditable. It reports the longest uninterrupted run of observed in-band clock hours after the first breach, without filling gaps. A value below 24 explains why recovery cannot be confirmed from the available observations; a blank value means the coin never breached that tolerance.
 
 ## Folder map
 

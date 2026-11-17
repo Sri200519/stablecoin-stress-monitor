@@ -39,11 +39,13 @@ def recovery_after_breach(
             "breach_time": None,
             "recovery_time": None,
             "recovery_hours": None,
+            "longest_observed_in_band_streak_hours": None,
             "status": f"No breach beyond {threshold_pct:.1f}%",
         }
     first_index = int(np.flatnonzero(breached.to_numpy())[0])
     breach_time = ordered.loc[first_index, "timestamp"]
     streak = 0
+    longest_streak = 0
     start_index = None
     for index in range(first_index + 1, len(ordered)):
         is_next_hour = (
@@ -52,9 +54,9 @@ def recovery_after_breach(
         )
         if ordered.loc[index, "absolute_deviation_pct"] <= threshold_pct:
             streak = streak + 1 if is_next_hour else 1
-            if streak == consecutive_observations:
+            longest_streak = max(longest_streak, streak)
+            if streak == consecutive_observations and start_index is None:
                 start_index = index - consecutive_observations + 1
-                break
         else:
             streak = 0
     if start_index is None:
@@ -62,6 +64,7 @@ def recovery_after_breach(
             "breach_time": breach_time,
             "recovery_time": None,
             "recovery_hours": None,
+            "longest_observed_in_band_streak_hours": longest_streak,
             "status": "Not recovered in study window",
         }
     recovery_time = ordered.loc[start_index, "timestamp"]
@@ -70,6 +73,7 @@ def recovery_after_breach(
         "breach_time": breach_time,
         "recovery_time": recovery_time,
         "recovery_hours": float(hours),
+        "longest_observed_in_band_streak_hours": longest_streak,
         "status": "Recovered",
     }
 

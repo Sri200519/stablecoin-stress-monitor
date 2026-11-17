@@ -26,8 +26,8 @@
 
 ## Summary files
 
-- `asset_summary_1pct.csv` contains minimum price, maximum depeg, time inside peg bands, and the sustained one-percent recovery result.
-- `threshold_comparison.csv` contains breach and sustained recovery results at 0.5%, 1%, and 5% tolerances. A missing hour breaks a 24-hour recovery streak.
+- `asset_summary_1pct.csv` contains minimum price, maximum depeg, time inside peg bands, the sustained one-percent recovery result, and `longest_observed_in_band_streak_hours`.
+- `threshold_comparison.csv` contains breach and sustained recovery results at 0.5%, 1%, and 5% tolerances, including `longest_observed_in_band_streak_hours`. This counts the longest run of adjacent observed in-band clock hours after the first breach. A missing hour or a new breach resets the count. It is blank when no breach occurred.
 - `phase_summary.csv` contains observation counts, price ranges, and absolute deviations for each project phase.
 - `supply_summary.csv` computes May 1-31 changes only for complete supply series. UST change fields are intentionally blank.
 - `data_quality_summary.csv` compares observed hourly price rows with the expected 744 hours in May.

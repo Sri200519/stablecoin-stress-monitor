@@ -32,6 +32,7 @@ def test_recovery_requires_sustained_observations() -> None:
     assert result["status"] == "Recovered"
     assert result["recovery_time"] == timestamps[2]
     assert result["recovery_hours"] == 1.0
+    assert result["longest_observed_in_band_streak_hours"] == 28
 
 
 def test_no_recovery_when_window_ends_inside_breach() -> None:
@@ -40,6 +41,17 @@ def test_no_recovery_when_window_ends_inside_breach() -> None:
     result = recovery_after_breach(frame, threshold_pct=1.0, consecutive_observations=3)
     assert result["status"] == "Not recovered in study window"
     assert result["recovery_time"] is None
+    assert result["longest_observed_in_band_streak_hours"] == 0
+
+
+def test_longest_streak_is_undefined_without_a_breach() -> None:
+    timestamps = pd.date_range("2022-05-01", periods=5, freq="h", tz="UTC")
+    frame = enrich_prices(
+        pd.DataFrame({"timestamp": timestamps, "asset": "TEST", "price_usd": [1.0] * 5})
+    )
+    result = recovery_after_breach(frame, threshold_pct=1.0)
+    assert result["status"].startswith("No breach")
+    assert result["longest_observed_in_band_streak_hours"] is None
 
 
 def test_missing_hour_breaks_24_hour_recovery_streak() -> None:
@@ -51,6 +63,7 @@ def test_missing_hour_breaks_24_hour_recovery_streak() -> None:
     result = recovery_after_breach(frame, threshold_pct=1.0)
     assert result["status"] == "Not recovered in study window"
     assert result["recovery_time"] is None
+    assert result["longest_observed_in_band_streak_hours"] == 12
 
 
 def test_recovery_starts_after_missing_hour_when_new_streak_reaches_24() -> None:
@@ -63,4 +76,5 @@ def test_recovery_starts_after_missing_hour_when_new_streak_reaches_24() -> None
     assert result["status"] == "Recovered"
     assert result["recovery_time"] == hours[14]
     assert result["recovery_hours"] == 14.0
+    assert result["longest_observed_in_band_streak_hours"] == 24
 

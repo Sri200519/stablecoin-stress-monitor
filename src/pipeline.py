@@ -37,7 +37,10 @@ def run_pipeline(refresh: bool = False, offline: bool = False) -> dict[str, Path
         [build_asset_summary(prices, threshold_pct=t) for t in (0.5, 1.0, 5.0)],
         ignore_index=True,
     )[
-        ["asset", "threshold_pct", "breach_time", "recovery_time", "recovery_hours", "status"]
+        [
+            "asset", "threshold_pct", "breach_time", "recovery_time", "recovery_hours",
+            "longest_observed_in_band_streak_hours", "status",
+        ]
     ]
     phase_summary = build_phase_summary(prices)
     supply_summary = build_supply_summary(supply)

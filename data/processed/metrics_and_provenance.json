@@ -95,6 +95,7 @@
       "breach_time": "2022-05-09T15:00:00+00:00",
       "recovery_time": null,
       "recovery_hours": null,
+      "longest_observed_in_band_streak_hours": 0.0,
       "status": "Not recovered in study window"
     },
     {
@@ -111,6 +112,7 @@
       "breach_time": "NaT",
       "recovery_time": null,
       "recovery_hours": null,
+      "longest_observed_in_band_streak_hours": NaN,
       "status": "No breach beyond 1.0%"
     },
     {
@@ -127,6 +129,7 @@
       "breach_time": "2022-05-12T05:00:00+00:00",
       "recovery_time": null,
       "recovery_hours": null,
+      "longest_observed_in_band_streak_hours": 13.0,
       "status": "Not recovered in study window"
     }
   ],
@@ -137,6 +140,7 @@
       "breach_time": "2022-05-08T01:00:00+00:00",
       "recovery_time": "NaT",
       "recovery_hours": NaN,
+      "longest_observed_in_band_streak_hours": 6.0,
       "status": "Not recovered in study window"
     },
     {
@@ -145,6 +149,7 @@
       "breach_time": "2022-05-10T00:00:00+00:00",
       "recovery_time": "2022-05-10T16:00:00+00:00",
       "recovery_hours": 16.0,
+      "longest_observed_in_band_streak_hours": 136.0,
       "status": "Recovered"
     },
     {
@@ -153,6 +158,7 @@
       "breach_time": "2022-05-09T18:00:00+00:00",
       "recovery_time": "NaT",
       "recovery_hours": NaN,
+      "longest_observed_in_band_streak_hours": 15.0,
       "status": "Not recovered in study window"
     },
     {
@@ -161,6 +167,7 @@
       "breach_time": "2022-05-09T15:00:00+00:00",
       "recovery_time": null,
       "recovery_hours": null,
+      "longest_observed_in_band_streak_hours": 0.0,
       "status": "Not recovered in study window"
     },
     {
@@ -169,6 +176,7 @@
       "breach_time": "NaT",
       "recovery_time": null,
       "recovery_hours": null,
+      "longest_observed_in_band_streak_hours": NaN,
       "status": "No breach beyond 1.0%"
     },
     {
@@ -177,6 +185,7 @@
       "breach_time": "2022-05-12T05:00:00+00:00",
       "recovery_time": null,
       "recovery_hours": null,
+      "longest_observed_in_band_streak_hours": 13.0,
       "status": "Not recovered in study window"
     },
     {
@@ -185,6 +194,7 @@
       "breach_time": "2022-05-09T18:00:00+00:00",
       "recovery_time": null,
       "recovery_hours": null,
+      "longest_observed_in_band_streak_hours": 0.0,
       "status": "Not recovered in study window"
     },
     {
@@ -193,6 +203,7 @@
       "breach_time": "NaT",
       "recovery_time": null,
       "recovery_hours": null,
+      "longest_observed_in_band_streak_hours": NaN,
       "status": "No breach beyond 5.0%"
     },
     {
@@ -201,6 +212,7 @@
       "breach_time": "NaT",
       "recovery_time": null,
       "recovery_hours": null,
+      "longest_observed_in_band_streak_hours": NaN,
       "status": "No breach beyond 5.0%"
     }
   ],

@@ -250,6 +250,9 @@ with tab_peg:
             "Lost peg (UTC)": table["breach_time"].map(fmt_time),
             "Recovered (UTC)": table["recovery_time"].map(fmt_time),
             "Time to recover": table["recovery_hours"].map(fmt_hours),
+            "Longest observed in-band streak": table["longest_observed_in_band_streak_hours"].map(
+                lambda v: f"{int(v)} h" if pd.notna(v) else "—"
+            ),
             "Status": table["status"].map(
                 lambda v: "Recovered" if v == "Recovered"
                 else "Never breached" if v.startswith("No breach") else "Not recovered"),
@@ -274,7 +277,8 @@ with tab_peg:
     st.caption(
         "Lost peg = first hour the price moved beyond the threshold in either direction "
         "(so a price spike above $1 also counts). Recovered = first hour of 24 consecutive "
-        "clock hours back inside the band. A missing hour breaks the streak."
+        "clock hours back inside the band. A missing hour breaks the streak. "
+        "The longest streak counts adjacent observed hours after the first breach; it does not fill gaps."
     )
 
 # ---------------------------------------------------------------------- supply
